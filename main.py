@@ -2,10 +2,10 @@ import os
 
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
-from langchain_openai import ChatOpenAI
 from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
 
-load_dotenv()  # Load environment variables from .env file
+load_dotenv(override=True)  # Load the project's tracing configuration
 
 
 def main():
@@ -32,11 +32,12 @@ Under Modi's tenure, India has experienced democratic backsliding, or the weaken
         template=summary_template,
     )
 
-    # llm = ChatOllama(model="gemma3:270m", temperature=0)
-    llm = ChatOpenAI(model="gpt-5", temperature=0)
+    llm = ChatOllama(model="gemma3:270m", temperature=0)
+    # llm = ChatOpenAI(model="gpt-5", temperature=0)
     chain = summary_prompt_template | llm
     response = chain.invoke({"information": information})
     print(response.content)
+
 
 if __name__ == "__main__":
     main()
